@@ -1,13 +1,13 @@
-package int64
+package intmath
 
-func Abs(x int64) int64 {
+func Abs64(x int64) int64 {
 	if x >= 0 {
 		return x
 	}
 	return -x
 }
 
-func Min(values ...int64) int64 {
+func Min64(values ...int64) int64 {
 	if len(values) == 0 {
 		panic("no values")
 	}
@@ -20,7 +20,7 @@ func Min(values ...int64) int64 {
 	return min
 }
 
-func Max(values ...int64) int64 {
+func Max64(values ...int64) int64 {
 	if len(values) == 0 {
 		panic("no values")
 	}
@@ -33,7 +33,7 @@ func Max(values ...int64) int64 {
 	return max
 }
 
-func Pow(base int64, exponent uint) int64 {
+func Pow64(base int64, exponent uint) int64 {
 	answer := int64(1)
 	for i := uint(0); i < exponent; i++ {
 		answer *= base
