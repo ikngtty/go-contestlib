@@ -13,6 +13,7 @@ type Scanner struct {
 func NewScanner() *Scanner {
 	bufSc := bufio.NewScanner(os.Stdin)
 	bufSc.Split(bufio.ScanWords)
+	bufSc.Buffer(nil, 100000000)
 	return &Scanner{bufSc}
 }
 

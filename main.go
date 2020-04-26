@@ -22,4 +22,7 @@ func main() {
 	y := sc.ReadString()
 	fmt.Println(x) // abc
 	fmt.Println(y) // def
+
+	s := sc.ReadString()
+	fmt.Println(len(s)) // 100,000
 }
