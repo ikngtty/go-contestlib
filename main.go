@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/ikngtty/golib/io"
+	"github.com/ikngtty/go-contestlib/io"
 )
 
 func main() {
