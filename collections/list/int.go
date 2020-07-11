@@ -1,9 +1,9 @@
 package list
 
 type IntList struct {
-	first *intListNode
-	last  *intListNode
-	len   int
+	root *intListNode
+	last *intListNode
+	len  int
 }
 
 type intListNode struct {
@@ -39,13 +39,13 @@ func (list *IntList) Concat(other *IntList) {
 	if other.Len() == 0 {
 		return
 	}
-	list.last.child = other.first.child
+	list.last.child = other.root.child
 	list.last = other.last
 	list.len += other.Len()
 }
 
 func (list *IntList) Each(f func(elem int)) {
-	cur := list.first
+	cur := list.root
 	for cur.child != nil {
 		cur = cur.child
 		f(cur.value)
