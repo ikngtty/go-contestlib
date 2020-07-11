@@ -77,7 +77,7 @@ func TestMax(t *testing.T) {
 func TestPow(t *testing.T) {
 	cases := []struct {
 		base     int
-		exponent uint
+		exponent int
 		want     int
 	}{
 		{5, 0, 1},
