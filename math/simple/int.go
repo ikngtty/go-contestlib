@@ -47,6 +47,10 @@ func Pow(base, exponent int) int {
 }
 
 func Ceil(divident, dividor int) int {
+	if dividor == 0 {
+		panic("dividor should not be 0")
+	}
+
 	quo := divident / dividor
 	rem := divident % dividor
 
