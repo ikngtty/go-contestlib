@@ -1,9 +1,9 @@
 package list
 
 type IntList struct {
-	root *intListNode
-	last *intListNode
-	len  int
+	first *intListNode
+	last  *intListNode
+	len   int
 }
 
 type intListNode struct {
@@ -12,8 +12,7 @@ type intListNode struct {
 }
 
 func NewIntList() *IntList {
-	root := intListNode{nil, 0}
-	return &IntList{&root, &root, 0}
+	return &IntList{nil, nil, 0}
 }
 
 func NewIntListFromArray(a []int) *IntList {
@@ -30,25 +29,33 @@ func (list *IntList) Len() int {
 
 func (list *IntList) Add(elem int) {
 	node := intListNode{nil, elem}
-	list.last.child = &node
-	list.last = &node
+	if list.first == nil {
+		list.first = &node
+		list.last = &node
+	} else {
+		list.last.child = &node
+		list.last = &node
+	}
 	list.len++
 }
 
 func (list *IntList) Concat(other *IntList) {
-	if other.Len() == 0 {
-		return
+	if list.first == nil {
+		*list = *other
+	} else if other.first == nil {
+		// Do nothing
+	} else {
+		list.last.child = other.first
+		list.last = other.last
+		list.len += other.len
 	}
-	list.last.child = other.root.child
-	list.last = other.last
-	list.len += other.Len()
 }
 
 func (list *IntList) Each(f func(elem int)) {
-	cur := list.root
-	for cur.child != nil {
-		cur = cur.child
+	cur := list.first
+	for cur != nil {
 		f(cur.value)
+		cur = cur.child
 	}
 }
 
