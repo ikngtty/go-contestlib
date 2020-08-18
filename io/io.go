@@ -46,3 +46,15 @@ func (sc *Scanner) ReadInt64() int64 {
 	}
 	return num
 }
+
+func (sc *Scanner) ReadFloat() float64 {
+	bufSc := sc.bufScanner
+	bufSc.Scan()
+	text := bufSc.Text()
+
+	num, err := strconv.ParseFloat(text, 64)
+	if err != nil {
+		panic(err)
+	}
+	return num
+}

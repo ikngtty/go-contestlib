@@ -18,6 +18,10 @@ func main() {
 	e := sc.ReadInt64()
 	fmt.Println(d + e) // 90
 
+	f := sc.ReadFloat()
+	g := sc.ReadFloat()
+	fmt.Println(f + g) // (around) 15.6
+
 	x := sc.ReadString()
 	y := sc.ReadString()
 	fmt.Println(x) // abc
