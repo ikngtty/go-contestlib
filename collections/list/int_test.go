@@ -1,99 +1,172 @@
 package list
 
 import (
-	"fmt"
 	"reflect"
 	"testing"
 )
 
-func TestNewIntListFromArray(t *testing.T) {
-	// NOTE: Dependency
-	// -   NewIntListFromArray()
-	//     -   NewIntList()
-	//     -   list.Add()
-	// -   list.ToA()
-	//     -   list.Len()
-	//     -   list.Each()
+func TestNewIntList(t *testing.T) {
+	want := newIntList0()
+	got := NewIntList()
+	assertEqual(t, want, got)
+}
 
+func TestNewIntListFromArray(t *testing.T) {
 	cases := []struct {
-		a []int
+		name string
+		a    []int
+		want *IntList
 	}{
-		{[]int{}},
-		{[]int{20}},
-		{[]int{20, 30}},
-		{[]int{20, 30, 10}},
+		{"Length0", []int{}, newIntList0()},
+		{"Length1", []int{10}, newIntList1(10)},
+		{"Length2", []int{10, 20}, newIntList2(10, 20)},
+		{"Length3", []int{10, 20, 30}, newIntList3(10, 20, 30)},
 	}
 	for _, c := range cases {
-		testName := fmt.Sprintf("from_%d_length_array", len(c.a))
-		t.Run(testName, func(t *testing.T) {
-			list := NewIntListFromArray(c.a)
-
-			got := list.ToA()
-			want := c.a
-			if !reflect.DeepEqual(got, want) {
-				t.Errorf("want: %#v, got: %#v", want, got)
-			}
+		t.Run(c.name, func(t *testing.T) {
+			got := NewIntListFromArray(c.a)
+			assertEqual(t, c.want, got)
 		})
 	}
 }
 
-func TestIntListConcat(t *testing.T) {
-	// NOTE: Dependency
-	// -   list.Concat()
-	// -   NewIntListFromArray()
-	//     -   NewIntList()
-	//     -   list.Add()
-	// -   list.ToA()
-	//     -   list.Len()
-	//     -   list.Each()
+func TestIntListAdd(t *testing.T) {
+	got := newIntList0()
 
-	t.Run("the_list_argument_is_unchanged", func(t *testing.T) {
-		list := NewIntListFromArray([]int{10, 20, 30})
-		other := NewIntListFromArray([]int{40, 50, 60})
-
-		list.Concat(other)
-
-		got := other.ToA()
-		want := []int{40, 50, 60}
-		if !reflect.DeepEqual(got, want) {
-			t.Errorf("want: %#v, got: %#v", want, got)
-		}
+	got.Add(10)
+	t.Run("1st add", func(t *testing.T) {
+		assertEqual(t, newIntList1(10), got)
 	})
 
+	got.Add(20)
+	t.Run("2nd add", func(t *testing.T) {
+		assertEqual(t, newIntList2(10, 20), got)
+	})
+
+	got.Add(30)
+	t.Run("3rd add", func(t *testing.T) {
+		assertEqual(t, newIntList3(10, 20, 30), got)
+	})
+}
+
+func TestIntListConcat(t *testing.T) {
 	cases := []struct {
-		list  []int
-		other []int
-		want  []int
+		name  string
+		left  *IntList
+		right *IntList
+		want  *IntList
 	}{
-		{[]int{}, []int{}, []int{}},
-		{[]int{}, []int{22}, []int{22}},
-		{[]int{}, []int{22, 44}, []int{22, 44}},
-		{[]int{}, []int{22, 44, 33}, []int{22, 44, 33}},
-		{[]int{30}, []int{}, []int{30}},
-		{[]int{30}, []int{22}, []int{30, 22}},
-		{[]int{30}, []int{22, 44}, []int{30, 22, 44}},
-		{[]int{30}, []int{22, 44, 33}, []int{30, 22, 44, 33}},
-		{[]int{30, 10}, []int{}, []int{30, 10}},
-		{[]int{30, 10}, []int{22}, []int{30, 10, 22}},
-		{[]int{30, 10}, []int{22, 44}, []int{30, 10, 22, 44}},
-		{[]int{30, 10}, []int{22, 44, 33}, []int{30, 10, 22, 44, 33}},
-		{[]int{30, 10, 50}, []int{}, []int{30, 10, 50}},
-		{[]int{30, 10, 50}, []int{22}, []int{30, 10, 50, 22}},
-		{[]int{30, 10, 50}, []int{22, 44}, []int{30, 10, 50, 22, 44}},
-		{[]int{30, 10, 50}, []int{22, 44, 33}, []int{30, 10, 50, 22, 44, 33}},
+		{"Length0+Length0",
+			newIntList0(), newIntList0(),
+			newIntList0()},
+		{"Length0+Length1",
+			newIntList0(), newIntList1(100),
+			newIntList1(100)},
+		{"Length0+Length2",
+			newIntList0(), newIntList2(100, 200),
+			newIntList2(100, 200)},
+		{"Length1+Length0",
+			newIntList1(10), newIntList0(),
+			newIntList1(10)},
+		{"Length1+Length1",
+			newIntList1(10), newIntList1(100),
+			newIntList2(10, 100)},
+		{"Length1+Length2",
+			newIntList1(10), newIntList2(100, 200),
+			newIntList3(10, 100, 200)},
+		{"Length2+Length0",
+			newIntList2(10, 20), newIntList0(),
+			newIntList2(10, 20)},
+		{"Length2+Length1",
+			newIntList2(10, 20), newIntList1(100),
+			newIntList3(10, 20, 100)},
+		{"Length2+Length2",
+			newIntList2(10, 20), newIntList2(100, 200),
+			newIntList4(10, 20, 100, 200)},
 	}
 	for _, c := range cases {
-		testName := fmt.Sprintf("%v+%v", c.list, c.other)
-		t.Run(testName, func(t *testing.T) {
-			list := NewIntListFromArray(c.list)
-			other := NewIntListFromArray(c.other)
-
-			list.Concat(other)
-
-			got := list.ToA()
-			if !reflect.DeepEqual(got, c.want) {
-				t.Errorf("want: %#v, got: %#v", c.want, got)
-			}
+		t.Run(c.name, func(t *testing.T) {
+			c.left.Concat(c.right)
+			assertEqual(t, c.want, c.left)
 		})
 	}
+}
+
+func TestIntListEach(t *testing.T) {
+	cases := []struct {
+		name string
+		list *IntList
+		want []int
+	}{
+		{"Length0", newIntList0(), []int{}},
+		{"Length1", newIntList1(10), []int{10}},
+		{"Length2", newIntList2(10, 20), []int{10, 20}},
+		{"Length3", newIntList3(10, 20, 30), []int{10, 20, 30}},
+	}
+	for _, c := range cases {
+		t.Run(c.name, func(t *testing.T) {
+			got := make([]int, 0)
+			c.list.Each(func(elem int) {
+				got = append(got, elem)
+			})
+			assertEqual(t, c.want, got)
+		})
+	}
+}
+
+func TestIntListToA(t *testing.T) {
+	cases := []struct {
+		name string
+		list *IntList
+		want []int
+	}{
+		{"Length0", newIntList0(), []int{}},
+		{"Length1", newIntList1(10), []int{10}},
+		{"Length2", newIntList2(10, 20), []int{10, 20}},
+		{"Length3", newIntList3(10, 20, 30), []int{10, 20, 30}},
+	}
+	for _, c := range cases {
+		t.Run(c.name, func(t *testing.T) {
+			got := c.list.ToA()
+			assertEqual(t, c.want, got)
+		})
+	}
+}
+
+func assertEqual(t *testing.T, want, got interface{}) {
+	if !reflect.DeepEqual(got, want) {
+		// TODO: more detail print (`%#v` can show a pointer value but
+		// cannot show the value that a pointer refer to)
+		t.Errorf("want: %#v, got: %#v", want, got)
+	}
+}
+
+func newIntList0() *IntList {
+	return &IntList{first: nil, last: nil, len: 0}
+}
+
+func newIntList1(value1 int) *IntList {
+	node1 := intListNode{child: nil, value: value1}
+	return &IntList{first: &node1, last: &node1, len: 1}
+}
+
+func newIntList2(value1, value2 int) *IntList {
+	node2 := intListNode{child: nil, value: value2}
+	node1 := intListNode{child: &node2, value: value1}
+	return &IntList{first: &node1, last: &node2, len: 2}
+}
+
+func newIntList3(value1, value2, value3 int) *IntList {
+	node3 := intListNode{child: nil, value: value3}
+	node2 := intListNode{child: &node3, value: value2}
+	node1 := intListNode{child: &node2, value: value1}
+	return &IntList{first: &node1, last: &node3, len: 3}
+}
+
+func newIntList4(value1, value2, value3, value4 int) *IntList {
+	node4 := intListNode{child: nil, value: value4}
+	node3 := intListNode{child: &node4, value: value3}
+	node2 := intListNode{child: &node3, value: value2}
+	node1 := intListNode{child: &node2, value: value1}
+	return &IntList{first: &node1, last: &node4, len: 4}
 }
