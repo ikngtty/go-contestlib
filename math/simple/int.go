@@ -39,7 +39,7 @@ func Max(values ...int) int {
 
 func Pow(base, exponent int) int {
 	if exponent < 0 {
-		panic(fmt.Sprintf("exponent (%d) should not be a minus", exponent))
+		panic(fmt.Sprintf("invalid exponent: %d", exponent))
 	}
 
 	answer := 1
@@ -51,7 +51,7 @@ func Pow(base, exponent int) int {
 
 func Ceil(divident, dividor int) int {
 	if dividor == 0 {
-		panic("dividor should not be 0")
+		panic("divide by zero")
 	}
 
 	quo := divident / dividor

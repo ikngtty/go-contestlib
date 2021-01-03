@@ -99,7 +99,7 @@ func DupCombinations(n, k int, f func([]int)) {
 
 func BitPatterns(bitsLen int, f func([]bool)) {
 	if bitsLen < 0 {
-		panic(fmt.Sprintf("bitsLen (%d) should not be a minus", bitsLen))
+		panic(fmt.Sprintf("invalid bitsLen: %d", bitsLen))
 	}
 
 	pattern := make([]bool, bitsLen)
