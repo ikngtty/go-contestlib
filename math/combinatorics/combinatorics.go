@@ -1,6 +1,12 @@
 package combinatorics
 
+import "fmt"
+
 func Permutations(n, k int, f func([]int)) {
+	if n < 0 || k < 0 || n < k {
+		panic(fmt.Sprintf("invalid arguments (n, k): (%d, %d)", n, k))
+	}
+
 	checklist := make([]bool, n)
 	pattern := make([]int, k)
 
@@ -26,6 +32,10 @@ func Permutations(n, k int, f func([]int)) {
 }
 
 func Combinations(n, k int, f func([]int)) {
+	if n < 0 || k < 0 || n < k {
+		panic(fmt.Sprintf("invalid arguments (n, k): (%d, %d)", n, k))
+	}
+
 	pattern := make([]int, k)
 
 	var body func(pos, begin int)
@@ -44,6 +54,10 @@ func Combinations(n, k int, f func([]int)) {
 }
 
 func DupPermutations(n, k int, f func([]int)) {
+	if n < 0 || k < 0 || n < k {
+		panic(fmt.Sprintf("invalid arguments (n, k): (%d, %d)", n, k))
+	}
+
 	pattern := make([]int, k)
 
 	var body func(pos int)
@@ -62,6 +76,10 @@ func DupPermutations(n, k int, f func([]int)) {
 }
 
 func DupCombinations(n, k int, f func([]int)) {
+	if n < 0 || k < 0 || n < k {
+		panic(fmt.Sprintf("invalid arguments (n, k): (%d, %d)", n, k))
+	}
+
 	pattern := make([]int, k)
 
 	var body func(pos, begin int)
@@ -80,6 +98,10 @@ func DupCombinations(n, k int, f func([]int)) {
 }
 
 func BitPatterns(bitsLen int, f func([]bool)) {
+	if bitsLen < 0 {
+		panic(fmt.Sprintf("bitsLen (%d) should not be a minus", bitsLen))
+	}
+
 	pattern := make([]bool, bitsLen)
 
 	var body func(pos int)
