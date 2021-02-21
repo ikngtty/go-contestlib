@@ -1,5 +1,6 @@
 package list
 
+// IntList is a list of int.
 type IntList struct {
 	first *intListNode
 	last  *intListNode
@@ -11,10 +12,12 @@ type intListNode struct {
 	value int
 }
 
+// NewIntList returns a new IntList.
 func NewIntList() *IntList {
 	return &IntList{nil, nil, 0}
 }
 
+// NewIntListFromArray returns a new IntList having the values "a" has.
 func NewIntListFromArray(a []int) *IntList {
 	list := NewIntList()
 	for _, elem := range a {
@@ -23,10 +26,12 @@ func NewIntListFromArray(a []int) *IntList {
 	return list
 }
 
+// Len returns length of the list.
 func (list *IntList) Len() int {
 	return list.len
 }
 
+// Add adds elem to the list.
 func (list *IntList) Add(elem int) {
 	node := intListNode{nil, elem}
 	if list.first == nil {
@@ -39,6 +44,7 @@ func (list *IntList) Add(elem int) {
 	list.len++
 }
 
+// Concat concatenates the list and the other.
 func (list *IntList) Concat(other *IntList) {
 	if list.first == nil {
 		*list = *other
@@ -51,6 +57,7 @@ func (list *IntList) Concat(other *IntList) {
 	}
 }
 
+// Each applies f for every element in the list.
 func (list *IntList) Each(f func(elem int)) {
 	cur := list.first
 	for cur != nil {
@@ -59,6 +66,7 @@ func (list *IntList) Each(f func(elem int)) {
 	}
 }
 
+// ToA converts the list to an array.
 func (list *IntList) ToA() []int {
 	a := make([]int, list.Len())
 	{

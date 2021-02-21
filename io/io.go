@@ -6,10 +6,12 @@ import (
 	"strconv"
 )
 
+// Scanner reads data from standard I/O.
 type Scanner struct {
 	bufScanner *bufio.Scanner
 }
 
+// NewScanner returns a new Scanner.
 func NewScanner() *Scanner {
 	bufSc := bufio.NewScanner(os.Stdin)
 	bufSc.Split(bufio.ScanWords)
@@ -17,12 +19,14 @@ func NewScanner() *Scanner {
 	return &Scanner{bufSc}
 }
 
+// ReadString reads a string value.
 func (sc *Scanner) ReadString() string {
 	bufSc := sc.bufScanner
 	bufSc.Scan()
 	return bufSc.Text()
 }
 
+// ReadInt reads a int value.
 func (sc *Scanner) ReadInt() int {
 	bufSc := sc.bufScanner
 	bufSc.Scan()
@@ -35,6 +39,7 @@ func (sc *Scanner) ReadInt() int {
 	return num
 }
 
+// ReadInt64 reads a int64 value.
 func (sc *Scanner) ReadInt64() int64 {
 	bufSc := sc.bufScanner
 	bufSc.Scan()
@@ -47,6 +52,7 @@ func (sc *Scanner) ReadInt64() int64 {
 	return num
 }
 
+// ReadFloat reads a float value.
 func (sc *Scanner) ReadFloat() float64 {
 	bufSc := sc.bufScanner
 	bufSc.Scan()

@@ -2,6 +2,7 @@ package simple
 
 import "fmt"
 
+// Abs returns the absolute value of x.
 func Abs(x int) int {
 	if x >= 0 {
 		return x
@@ -9,6 +10,7 @@ func Abs(x int) int {
 	return -x
 }
 
+// Min returns the minimum value of the specified values.
 func Min(values ...int) int {
 	if len(values) == 0 {
 		panic("no values")
@@ -23,6 +25,7 @@ func Min(values ...int) int {
 	return min
 }
 
+// Max returns the maximum value of the specified values.
 func Max(values ...int) int {
 	if len(values) == 0 {
 		panic("no values")
@@ -37,6 +40,7 @@ func Max(values ...int) int {
 	return max
 }
 
+// Pow returns base^exponent.
 func Pow(base, exponent int) int {
 	if exponent < 0 {
 		panic(fmt.Sprintf("invalid exponent: %d", exponent))
@@ -49,6 +53,7 @@ func Pow(base, exponent int) int {
 	return answer
 }
 
+// Ceil returns ceil(divident/dividor).
 func Ceil(divident, dividor int) int {
 	if dividor == 0 {
 		panic("divide by zero")

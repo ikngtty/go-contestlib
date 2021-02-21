@@ -2,6 +2,7 @@ package combinatorics
 
 import "fmt"
 
+// Permutations generates k-permutations of n and applies f for each permutation.
 func Permutations(n, k int, f func([]int)) {
 	if n < 0 || k < 0 || n < k {
 		panic(fmt.Sprintf("invalid arguments (n, k): (%d, %d)", n, k))
@@ -31,6 +32,7 @@ func Permutations(n, k int, f func([]int)) {
 	body(0)
 }
 
+// Combinations generates k-combinations of n and applies f for each combination.
 func Combinations(n, k int, f func([]int)) {
 	if n < 0 || k < 0 || n < k {
 		panic(fmt.Sprintf("invalid arguments (n, k): (%d, %d)", n, k))
@@ -53,6 +55,7 @@ func Combinations(n, k int, f func([]int)) {
 	body(0, 0)
 }
 
+// DupPermutations generates duplicated k-permutations of n and applies f for each permutation.
 func DupPermutations(n, k int, f func([]int)) {
 	if n < 0 || k < 0 || n < k {
 		panic(fmt.Sprintf("invalid arguments (n, k): (%d, %d)", n, k))
@@ -75,6 +78,7 @@ func DupPermutations(n, k int, f func([]int)) {
 	body(0)
 }
 
+// DupCombinations generates duplicated k-combinations of n and applies f for each combination.
 func DupCombinations(n, k int, f func([]int)) {
 	if n < 0 || k < 0 || n < k {
 		panic(fmt.Sprintf("invalid arguments (n, k): (%d, %d)", n, k))
@@ -97,6 +101,7 @@ func DupCombinations(n, k int, f func([]int)) {
 	body(0, 0)
 }
 
+// BitPatterns generates all bit patterns which size is bitsLen and applies f for each pattern.
 func BitPatterns(bitsLen int, f func([]bool)) {
 	if bitsLen < 0 {
 		panic(fmt.Sprintf("invalid bitsLen: %d", bitsLen))
