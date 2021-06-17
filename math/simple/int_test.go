@@ -159,3 +159,45 @@ func TestCeil(t *testing.T) {
 		})
 	}
 }
+
+func TestEuclideanDiv(t *testing.T) {
+	cases := []struct {
+		divident  int
+		dividor   int
+		quotient  int
+		remainder int
+	}{
+		{0, 3, 0, 0}, {0, -3, 0, 0},
+		{7, 1, 7, 0}, {7, -1, -7, 0}, {-7, 1, -7, 0}, {-7, -1, 7, 0},
+		{7, 3, 2, 1}, {7, -3, -2, 1}, {-7, 3, -3, 2}, {-7, -3, 3, 2},
+		{7, 10, 0, 7}, {7, -10, 0, 7}, {-7, 10, -1, 3}, {-7, -10, 1, 3},
+	}
+
+	for _, c := range cases {
+		caseName := fmt.Sprintf("(%d)_divided_by_(%d)", c.divident, c.dividor)
+		t.Run(caseName, func(t *testing.T) {
+			{
+				divident := c.quotient*c.dividor + c.remainder
+				if divident != c.divident {
+					t.Fatalf("wrong expectation: (%d)*(%d)+(%d)=(%d) (not %d)",
+						c.quotient, c.dividor, c.remainder, divident, c.divident)
+				}
+			}
+			{
+				maxRem := Abs(c.dividor)
+				if c.remainder < 0 || c.remainder >= Abs(c.dividor) {
+					t.Fatalf("wrong expectation: remainder %d should be between 0<= and <%d",
+						c.remainder, maxRem)
+				}
+			}
+
+			quotient, remainder := EuclideanDiv(c.divident, c.dividor)
+			if quotient != c.quotient {
+				t.Errorf("quotient want: %d, got: %d", c.quotient, quotient)
+			}
+			if remainder != c.remainder {
+				t.Errorf("remainder want: %d, got: %d", c.remainder, remainder)
+			}
+		})
+	}
+}

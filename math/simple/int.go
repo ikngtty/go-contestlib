@@ -70,3 +70,23 @@ func Ceil(divident, dividor int) int {
 	}
 	return quo
 }
+
+// EuclideanDiv does Euclidean divison.
+func EuclideanDiv(divident, dividor int) (quo, rem int) {
+	if dividor == 0 {
+		panic("divide by zero")
+	}
+
+	quo = divident / dividor
+	rem = divident % dividor
+	if rem < 0 {
+		if dividor > 0 {
+			quo -= 1
+			rem += dividor
+		} else {
+			quo += 1
+			rem -= dividor
+		}
+	}
+	return
+}
