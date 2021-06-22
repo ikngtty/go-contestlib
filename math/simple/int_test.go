@@ -201,3 +201,7 @@ func TestEucDiv(t *testing.T) {
 		})
 	}
 }
+
+func TestEucRem(t *testing.T) {
+	// check TestEucDiv
+}

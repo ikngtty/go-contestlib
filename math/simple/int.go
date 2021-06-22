@@ -73,20 +73,25 @@ func Ceil(divident, dividor int) int {
 
 // EucDiv does Euclidean divison.
 func EucDiv(divident, dividor int) (quo, rem int) {
+	// // duplicated with EucRem
+	// if dividor == 0 {
+	// 	panic("divide by zero")
+	// }
+
+	rem = EucRem(divident, dividor)
+	quo = (divident - rem) / dividor
+	return
+}
+
+// EucRem returns the remainder of Euclidean divison.
+func EucRem(divident, dividor int) int {
 	if dividor == 0 {
 		panic("divide by zero")
 	}
 
-	quo = divident / dividor
-	rem = divident % dividor
+	rem := divident % dividor
 	if rem < 0 {
-		if dividor > 0 {
-			quo -= 1
-			rem += dividor
-		} else {
-			quo += 1
-			rem -= dividor
-		}
+		rem += Abs(dividor)
 	}
-	return
+	return rem
 }
