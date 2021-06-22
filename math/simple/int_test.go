@@ -160,7 +160,7 @@ func TestCeil(t *testing.T) {
 	}
 }
 
-func TestEuclideanDiv(t *testing.T) {
+func TestEucDiv(t *testing.T) {
 	cases := []struct {
 		divident  int
 		dividor   int
@@ -191,7 +191,7 @@ func TestEuclideanDiv(t *testing.T) {
 				}
 			}
 
-			quotient, remainder := EuclideanDiv(c.divident, c.dividor)
+			quotient, remainder := EucDiv(c.divident, c.dividor)
 			if quotient != c.quotient {
 				t.Errorf("quotient want: %d, got: %d", c.quotient, quotient)
 			}

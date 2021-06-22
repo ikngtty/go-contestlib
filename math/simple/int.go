@@ -71,8 +71,8 @@ func Ceil(divident, dividor int) int {
 	return quo
 }
 
-// EuclideanDiv does Euclidean divison.
-func EuclideanDiv(divident, dividor int) (quo, rem int) {
+// EucDiv does Euclidean divison.
+func EucDiv(divident, dividor int) (quo, rem int) {
 	if dividor == 0 {
 		panic("divide by zero")
 	}

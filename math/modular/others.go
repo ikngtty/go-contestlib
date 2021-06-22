@@ -10,7 +10,7 @@ func ExtendedEuclidean(a, b int) (gcd, x, y int) {
 		y = 0
 		return
 	}
-	q, r := simple.EuclideanDiv(a, b)
+	q, r := simple.EucDiv(a, b)
 	gcd, s, t := ExtendedEuclidean(b, r)
 	x = t
 	y = s - q*t
