@@ -43,3 +43,21 @@ func (m Mod) Inv(n int) int {
 
 	return m.Reg(x)
 }
+
+// Invs returns the inverses of [0, 1, ..., n-1].
+func (mod Mod) Invs(n int) []int {
+	m := mod.modulus
+
+	if n > m {
+		panic(fmt.Sprintf("inverses more than %d are redundant", m))
+	}
+
+	invs := make([]int, n)
+	if n > 1 {
+		invs[1] = 1
+	}
+	for i := 2; i < n; i++ {
+		invs[i] = mod.Reg(-1 * invs[m%i] * (m / i))
+	}
+	return invs
+}

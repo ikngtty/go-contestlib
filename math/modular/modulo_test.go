@@ -2,6 +2,8 @@ package modular
 
 import (
 	"fmt"
+	"reflect"
+	"strconv"
 	"testing"
 )
 
@@ -43,6 +45,30 @@ func TestInv(t *testing.T) {
 			got := m.Inv(c.n)
 			if got != c.want {
 				t.Errorf("want: %d, got: %d", c.want, got)
+			}
+		})
+	}
+}
+
+func TestInvs(t *testing.T) {
+	const modulus = 13
+	m := NewMod(modulus)
+
+	cases := []struct {
+		n    int
+		want []int
+	}{
+		{0, []int{}},
+		{1, []int{0}},
+		{2, []int{0, 1}},
+		{4, []int{0, 1, 7, 9}},
+		{13, []int{0, 1, 7, 9, 10, 8, 11, 2, 5, 3, 4, 6, 12}},
+	}
+	for _, c := range cases {
+		t.Run(strconv.Itoa(c.n), func(t *testing.T) {
+			got := m.Invs(c.n)
+			if !reflect.DeepEqual(got, c.want) {
+				t.Errorf("want: %v, got: %v", c.want, got)
 			}
 		})
 	}
