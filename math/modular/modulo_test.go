@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-func TestReg(t *testing.T) {
+func TestModReg(t *testing.T) {
 	const modulus = 13
 	m := NewMod(modulus)
 
@@ -28,7 +28,7 @@ func TestReg(t *testing.T) {
 	}
 }
 
-func TestInv(t *testing.T) {
+func TestModInv(t *testing.T) {
 	const modulus = 13
 	m := NewMod(modulus)
 
@@ -50,7 +50,7 @@ func TestInv(t *testing.T) {
 	}
 }
 
-func TestInvs(t *testing.T) {
+func TestModInvs(t *testing.T) {
 	const modulus = 13
 	m := NewMod(modulus)
 
