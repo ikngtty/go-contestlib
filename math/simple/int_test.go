@@ -28,20 +28,19 @@ func TestAbs(t *testing.T) {
 
 func TestMin(t *testing.T) {
 	cases := []struct {
-		name   string
 		values []int
 		want   int
 	}{
-		{"1 item", []int{10}, 10},
-		{"2 items 1st", []int{10, 20}, 10},
-		{"2 items 2nd", []int{20, 10}, 10},
-		{"3 items 1st", []int{10, 20, 30}, 10},
-		{"3 items 2nd", []int{30, 10, 20}, 10},
-		{"3 items 3rd", []int{20, 30, 10}, 10},
+		{[]int{10}, 10},
+		{[]int{10, 20}, 10},
+		{[]int{20, 10}, 10},
+		{[]int{10, 20, 30}, 10},
+		{[]int{30, 10, 20}, 10},
+		{[]int{20, 30, 10}, 10},
 	}
 
 	for _, c := range cases {
-		t.Run(c.name, func(t *testing.T) {
+		t.Run(fmt.Sprint(c.values), func(t *testing.T) {
 			got := Min(c.values...)
 			if got != c.want {
 				t.Errorf("want: %d, got: %d", c.want, got)
@@ -52,20 +51,19 @@ func TestMin(t *testing.T) {
 
 func TestMax(t *testing.T) {
 	cases := []struct {
-		name   string
 		values []int
 		want   int
 	}{
-		{"1 item", []int{10}, 10},
-		{"2 items 1st", []int{20, 10}, 20},
-		{"2 items 2nd", []int{10, 20}, 20},
-		{"3 items 1st", []int{30, 20, 10}, 30},
-		{"3 items 2nd", []int{10, 30, 20}, 30},
-		{"3 items 3rd", []int{20, 10, 30}, 30},
+		{[]int{10}, 10},
+		{[]int{20, 10}, 20},
+		{[]int{10, 20}, 20},
+		{[]int{30, 20, 10}, 30},
+		{[]int{10, 30, 20}, 30},
+		{[]int{20, 10, 30}, 30},
 	}
 
 	for _, c := range cases {
-		t.Run(c.name, func(t *testing.T) {
+		t.Run(fmt.Sprint(c.values), func(t *testing.T) {
 			got := Max(c.values...)
 			if got != c.want {
 				t.Errorf("want: %d, got: %d", c.want, got)
