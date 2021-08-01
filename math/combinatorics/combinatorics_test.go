@@ -7,7 +7,7 @@ import (
 )
 
 func TestPermutations(t *testing.T) {
-	testCases := []struct {
+	cases := []struct {
 		n, k int
 		want [][]int
 	}{
@@ -37,25 +37,25 @@ func TestPermutations(t *testing.T) {
 			{4, 3, 0}, {4, 3, 1}, {4, 3, 2},
 		}},
 	}
-	for _, testCase := range testCases {
-		testCaseName := fmt.Sprintf("f(%d,%d)", testCase.n, testCase.k)
-		t.Run(testCaseName, func(t *testing.T) {
+	for _, c := range cases {
+		caseName := fmt.Sprintf("f(%d,%d)", c.n, c.k)
+		t.Run(caseName, func(t *testing.T) {
 			got := make([][]int, 0)
-			Permutations(testCase.n, testCase.k, func(pattern []int) {
+			Permutations(c.n, c.k, func(pattern []int) {
 				patternClone := make([]int, len(pattern))
 				copy(patternClone, pattern)
 				got = append(got, patternClone)
 			})
 
-			if !reflect.DeepEqual(got, testCase.want) {
-				t.Errorf("want: %v, got: %v", testCase.want, got)
+			if !reflect.DeepEqual(got, c.want) {
+				t.Errorf("want: %v, got: %v", c.want, got)
 			}
 		})
 	}
 }
 
 func TestCombinations(t *testing.T) {
-	testCases := []struct {
+	cases := []struct {
 		n, k int
 		want [][]int
 	}{
@@ -76,25 +76,25 @@ func TestCombinations(t *testing.T) {
 			{3, 4, 5},
 		}},
 	}
-	for _, testCase := range testCases {
-		testCaseName := fmt.Sprintf("f(%d,%d)", testCase.n, testCase.k)
-		t.Run(testCaseName, func(t *testing.T) {
+	for _, c := range cases {
+		caseName := fmt.Sprintf("f(%d,%d)", c.n, c.k)
+		t.Run(caseName, func(t *testing.T) {
 			got := make([][]int, 0)
-			Combinations(testCase.n, testCase.k, func(pattern []int) {
+			Combinations(c.n, c.k, func(pattern []int) {
 				patternClone := make([]int, len(pattern))
 				copy(patternClone, pattern)
 				got = append(got, patternClone)
 			})
 
-			if !reflect.DeepEqual(got, testCase.want) {
-				t.Errorf("want: %v, got: %v", testCase.want, got)
+			if !reflect.DeepEqual(got, c.want) {
+				t.Errorf("want: %v, got: %v", c.want, got)
 			}
 		})
 	}
 }
 
 func TestDupPermutations(t *testing.T) {
-	testCases := []struct {
+	cases := []struct {
 		n, k int
 		want [][]int
 	}{
@@ -120,25 +120,25 @@ func TestDupPermutations(t *testing.T) {
 			{3, 3, 0}, {3, 3, 1}, {3, 3, 2}, {3, 3, 3},
 		}},
 	}
-	for _, testCase := range testCases {
-		testCaseName := fmt.Sprintf("f(%d,%d)", testCase.n, testCase.k)
-		t.Run(testCaseName, func(t *testing.T) {
+	for _, c := range cases {
+		caseName := fmt.Sprintf("f(%d,%d)", c.n, c.k)
+		t.Run(caseName, func(t *testing.T) {
 			got := make([][]int, 0)
-			DupPermutations(testCase.n, testCase.k, func(pattern []int) {
+			DupPermutations(c.n, c.k, func(pattern []int) {
 				patternClone := make([]int, len(pattern))
 				copy(patternClone, pattern)
 				got = append(got, patternClone)
 			})
 
-			if !reflect.DeepEqual(got, testCase.want) {
-				t.Errorf("want: %v, got: %v", testCase.want, got)
+			if !reflect.DeepEqual(got, c.want) {
+				t.Errorf("want: %v, got: %v", c.want, got)
 			}
 		})
 	}
 }
 
 func TestDupCombinations(t *testing.T) {
-	testCases := []struct {
+	cases := []struct {
 		n, k int
 		want [][]int
 	}{
@@ -171,25 +171,25 @@ func TestDupCombinations(t *testing.T) {
 			{4, 4, 4},
 		}},
 	}
-	for _, testCase := range testCases {
-		testCaseName := fmt.Sprintf("f(%d,%d)", testCase.n, testCase.k)
-		t.Run(testCaseName, func(t *testing.T) {
+	for _, c := range cases {
+		caseName := fmt.Sprintf("f(%d,%d)", c.n, c.k)
+		t.Run(caseName, func(t *testing.T) {
 			got := make([][]int, 0)
-			DupCombinations(testCase.n, testCase.k, func(pattern []int) {
+			DupCombinations(c.n, c.k, func(pattern []int) {
 				patternClone := make([]int, len(pattern))
 				copy(patternClone, pattern)
 				got = append(got, patternClone)
 			})
 
-			if !reflect.DeepEqual(got, testCase.want) {
-				t.Errorf("want: %v, got: %v", testCase.want, got)
+			if !reflect.DeepEqual(got, c.want) {
+				t.Errorf("want: %v, got: %v", c.want, got)
 			}
 		})
 	}
 }
 
 func TestBitPatterns(t *testing.T) {
-	testCases := []struct {
+	cases := []struct {
 		bitsLen int
 		want    []string
 	}{
@@ -201,11 +201,11 @@ func TestBitPatterns(t *testing.T) {
 			"100", "101", "110", "111",
 		}},
 	}
-	for _, testCase := range testCases {
-		testCaseName := fmt.Sprintf("f(%d)", testCase.bitsLen)
-		t.Run(testCaseName, func(t *testing.T) {
-			want := make([][]bool, len(testCase.want))
-			for iBits, strBits := range testCase.want {
+	for _, c := range cases {
+		caseName := fmt.Sprintf("f(%d)", c.bitsLen)
+		t.Run(caseName, func(t *testing.T) {
+			want := make([][]bool, len(c.want))
+			for iBits, strBits := range c.want {
 				bits := make([]bool, len(strBits))
 				for iChar, charBit := range strBits {
 					bits[iChar] = charBit == '1'
@@ -214,7 +214,7 @@ func TestBitPatterns(t *testing.T) {
 			}
 
 			got := make([][]bool, 0)
-			BitPatterns(testCase.bitsLen, func(bits []bool) {
+			BitPatterns(c.bitsLen, func(bits []bool) {
 				bitsClone := make([]bool, len(bits))
 				copy(bitsClone, bits)
 				got = append(got, bitsClone)
