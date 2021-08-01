@@ -9,7 +9,6 @@ import (
 
 func TestModReg(t *testing.T) {
 	const modulus = 13
-	m := NewMod(modulus)
 
 	cases := []struct {
 		n    int
@@ -20,6 +19,7 @@ func TestModReg(t *testing.T) {
 	}
 	for _, c := range cases {
 		t.Run(fmt.Sprintf("(%d)mod%d", c.n, modulus), func(t *testing.T) {
+			m := NewMod(modulus)
 			got := m.Reg(c.n)
 			if got != c.want {
 				t.Errorf("want: %d, got: %d", c.want, got)
@@ -30,7 +30,6 @@ func TestModReg(t *testing.T) {
 
 func TestModInv(t *testing.T) {
 	const modulus = 13
-	m := NewMod(modulus)
 
 	cases := []struct {
 		n    int
@@ -42,6 +41,7 @@ func TestModInv(t *testing.T) {
 	}
 	for _, c := range cases {
 		t.Run(fmt.Sprintf("(%d)^(-1)mod%d", c.n, modulus), func(t *testing.T) {
+			m := NewMod(modulus)
 			got := m.Inv(c.n)
 			if got != c.want {
 				t.Errorf("want: %d, got: %d", c.want, got)
@@ -52,7 +52,6 @@ func TestModInv(t *testing.T) {
 
 func TestModInvs(t *testing.T) {
 	const modulus = 13
-	m := NewMod(modulus)
 
 	cases := []struct {
 		n    int
@@ -66,6 +65,7 @@ func TestModInvs(t *testing.T) {
 	}
 	for _, c := range cases {
 		t.Run(strconv.Itoa(c.n), func(t *testing.T) {
+			m := NewMod(modulus)
 			got := m.Invs(c.n)
 			if !reflect.DeepEqual(got, c.want) {
 				t.Errorf("want: %v, got: %v", c.want, got)
