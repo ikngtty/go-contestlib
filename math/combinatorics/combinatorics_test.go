@@ -37,7 +37,6 @@ func TestPermutations(t *testing.T) {
 			{4, 3, 0}, {4, 3, 1}, {4, 3, 2},
 		}},
 	}
-
 	for _, testCase := range testCases {
 		testCaseName := fmt.Sprintf("f(%d,%d)", testCase.n, testCase.k)
 		t.Run(testCaseName, func(t *testing.T) {
@@ -77,7 +76,6 @@ func TestCombinations(t *testing.T) {
 			{3, 4, 5},
 		}},
 	}
-
 	for _, testCase := range testCases {
 		testCaseName := fmt.Sprintf("f(%d,%d)", testCase.n, testCase.k)
 		t.Run(testCaseName, func(t *testing.T) {
@@ -122,7 +120,6 @@ func TestDupPermutations(t *testing.T) {
 			{3, 3, 0}, {3, 3, 1}, {3, 3, 2}, {3, 3, 3},
 		}},
 	}
-
 	for _, testCase := range testCases {
 		testCaseName := fmt.Sprintf("f(%d,%d)", testCase.n, testCase.k)
 		t.Run(testCaseName, func(t *testing.T) {
@@ -174,7 +171,6 @@ func TestDupCombinations(t *testing.T) {
 			{4, 4, 4},
 		}},
 	}
-
 	for _, testCase := range testCases {
 		testCaseName := fmt.Sprintf("f(%d,%d)", testCase.n, testCase.k)
 		t.Run(testCaseName, func(t *testing.T) {

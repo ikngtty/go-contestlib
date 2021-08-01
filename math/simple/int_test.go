@@ -15,7 +15,6 @@ func TestAbs(t *testing.T) {
 		{"zero", 0, 0},
 		{"negative", -5, 5},
 	}
-
 	for _, c := range cases {
 		t.Run(c.name, func(t *testing.T) {
 			got := Abs(c.x)
@@ -38,7 +37,6 @@ func TestMin(t *testing.T) {
 		{[]int{30, 10, 20}, 10},
 		{[]int{20, 30, 10}, 10},
 	}
-
 	for _, c := range cases {
 		t.Run(fmt.Sprint(c.values), func(t *testing.T) {
 			got := Min(c.values...)
@@ -61,7 +59,6 @@ func TestMax(t *testing.T) {
 		{[]int{10, 30, 20}, 30},
 		{[]int{20, 10, 30}, 30},
 	}
-
 	for _, c := range cases {
 		t.Run(fmt.Sprint(c.values), func(t *testing.T) {
 			got := Max(c.values...)
@@ -81,7 +78,6 @@ func TestPow(t *testing.T) {
 		{5, 0, 1}, {5, 1, 5}, {5, 2, 25}, {5, 3, 125},
 		{-5, 0, 1}, {-5, 1, -5}, {-5, 2, 25}, {-5, 3, -125},
 	}
-
 	for _, c := range cases {
 		caseName := fmt.Sprintf("(%d)^%d", c.base, c.exponent)
 		t.Run(caseName, func(t *testing.T) {
@@ -114,7 +110,6 @@ func TestCeil(t *testing.T) {
 		{2, 1, 2}, {1, 1, 1}, {0, 1, 0}, {-1, 1, -1}, {-2, 1, -2},
 		{2, -1, -2}, {1, -1, -1}, {0, -1, -0}, {-1, -1, 1}, {-2, -1, 2},
 	}
-
 	for _, c := range cases {
 		caseName := fmt.Sprintf("Ceil[%d/%d]", c.divident, c.dividor)
 		t.Run(caseName, func(t *testing.T) {
@@ -138,7 +133,6 @@ func TestEucDiv(t *testing.T) {
 		{7, 3, 2, 1}, {7, -3, -2, 1}, {-7, 3, -3, 2}, {-7, -3, 3, 2},
 		{7, 10, 0, 7}, {7, -10, 0, 7}, {-7, 10, -1, 3}, {-7, -10, 1, 3},
 	}
-
 	for _, c := range cases {
 		caseName := fmt.Sprintf("(%d)_divided_by_(%d)", c.divident, c.dividor)
 		t.Run(caseName, func(t *testing.T) {

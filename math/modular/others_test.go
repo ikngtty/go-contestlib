@@ -19,7 +19,6 @@ func TestExtendedEuclidean(t *testing.T) {
 		{15, 28, 1}, {28, 15, 1},
 		{28, 100, 4}, {100, 28, 4},
 	}
-
 	for _, c := range cases {
 		t.Run(fmt.Sprintf("%dx+%dy", c.a, c.b), func(t *testing.T) {
 			gcd, x, y := ExtendedEuclidean(c.a, c.b)
