@@ -41,11 +41,50 @@ func TestModInv(t *testing.T) {
 	}
 	for _, c := range cases {
 		t.Run(fmt.Sprintf("(%d)^(-1)mod%d", c.n, c.modulus), func(t *testing.T) {
+			defer func() {
+				if err := recover(); err != nil {
+					t.Errorf("unwanted panic: %#v", err)
+				}
+			}()
+
 			m := NewMod(c.modulus)
 			got := m.Inv(c.n)
 			if got != c.want {
 				t.Errorf("want: %d, got: %d", c.want, got)
 			}
+		})
+	}
+
+	panicCases := []struct {
+		modulus int
+		n       int
+		want    string
+	}{
+		{13, 0, "congruent with 0 (mod 13): 0"},
+		{13, 13, "congruent with 0 (mod 13): 13"},
+		{13, 26, "congruent with 0 (mod 13): 26"},
+		{13, -13, "congruent with 0 (mod 13): -13"},
+		{13, -26, "congruent with 0 (mod 13): -26"},
+		{1, 0, "congruent with 0 (mod 1): 0"},
+		{1, 1, "congruent with 0 (mod 1): 1"},
+		{1, 2, "congruent with 0 (mod 1): 2"},
+		{1, -1, "congruent with 0 (mod 1): -1"},
+		{1, -2, "congruent with 0 (mod 1): -2"},
+		{10, 6, "not prime to the modulus 10: 6"},
+		{10, 12, "not prime to the modulus 10: 12"},
+		{10, -6, "not prime to the modulus 10: -6"},
+	}
+	for _, c := range panicCases {
+		t.Run(fmt.Sprintf("(%d)^(-1)mod%d", c.n, c.modulus), func(t *testing.T) {
+			defer func() {
+				err := recover()
+				if err != c.want {
+					t.Errorf("wanted panic: %#v, got panic: %#v", c.want, err)
+				}
+			}()
+
+			m := NewMod(c.modulus)
+			m.Inv(c.n)
 		})
 	}
 }
@@ -65,11 +104,38 @@ func TestModInvs(t *testing.T) {
 	}
 	for _, c := range cases {
 		t.Run(strconv.Itoa(c.n), func(t *testing.T) {
+			defer func() {
+				if err := recover(); err != nil {
+					t.Errorf("unwanted panic: %#v", err)
+				}
+			}()
+
 			m := NewMod(modulus)
 			got := m.Invs(c.n)
 			if !reflect.DeepEqual(got, c.want) {
 				t.Errorf("want: %v, got: %v", c.want, got)
 			}
+		})
+	}
+
+	panicCases := []struct {
+		n    int
+		want string
+	}{
+		{-1, "invalid length: -1"},
+		{14, "inverses more than 13 are redundant"},
+	}
+	for _, c := range panicCases {
+		t.Run(strconv.Itoa(c.n), func(t *testing.T) {
+			defer func() {
+				err := recover()
+				if err != c.want {
+					t.Errorf("wanted panic: %#v, got panic: %#v", c.want, err)
+				}
+			}()
+
+			m := NewMod(modulus)
+			m.Invs(c.n)
 		})
 	}
 }

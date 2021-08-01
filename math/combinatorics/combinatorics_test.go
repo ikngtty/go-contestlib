@@ -43,6 +43,12 @@ func TestPermutations(t *testing.T) {
 	for _, c := range cases {
 		caseName := fmt.Sprintf("f(%d,%d)", c.n, c.k)
 		t.Run(caseName, func(t *testing.T) {
+			defer func() {
+				if err := recover(); err != nil {
+					t.Errorf("unwanted panic: %#v", err)
+				}
+			}()
+
 			got := make([][]int, 0)
 			Permutations(c.n, c.k, func(pattern []int) {
 				patternClone := make([]int, len(pattern))
@@ -53,6 +59,28 @@ func TestPermutations(t *testing.T) {
 			if !reflect.DeepEqual(got, c.want) {
 				t.Errorf("want: %v, got: %v", c.want, got)
 			}
+		})
+	}
+
+	panicCases := []struct {
+		n, k int
+		want string
+	}{
+		{-1, 0, "invalid arguments (n, k): (-1, 0)"},
+		{0, -1, "invalid arguments (n, k): (0, -1)"},
+		{3, 4, "invalid arguments (n, k): (3, 4)"},
+	}
+	for _, c := range panicCases {
+		caseName := fmt.Sprintf("f(%d,%d)", c.n, c.k)
+		t.Run(caseName, func(t *testing.T) {
+			defer func() {
+				err := recover()
+				if err != c.want {
+					t.Errorf("wanted panic: %#v, got panic: %#v", c.want, err)
+				}
+			}()
+
+			Permutations(c.n, c.k, func(pattern []int) {})
 		})
 	}
 }
@@ -82,6 +110,12 @@ func TestCombinations(t *testing.T) {
 	for _, c := range cases {
 		caseName := fmt.Sprintf("f(%d,%d)", c.n, c.k)
 		t.Run(caseName, func(t *testing.T) {
+			defer func() {
+				if err := recover(); err != nil {
+					t.Errorf("unwanted panic: %#v", err)
+				}
+			}()
+
 			got := make([][]int, 0)
 			Combinations(c.n, c.k, func(pattern []int) {
 				patternClone := make([]int, len(pattern))
@@ -92,6 +126,28 @@ func TestCombinations(t *testing.T) {
 			if !reflect.DeepEqual(got, c.want) {
 				t.Errorf("want: %v, got: %v", c.want, got)
 			}
+		})
+	}
+
+	panicCases := []struct {
+		n, k int
+		want string
+	}{
+		{-1, 0, "invalid arguments (n, k): (-1, 0)"},
+		{0, -1, "invalid arguments (n, k): (0, -1)"},
+		{3, 4, "invalid arguments (n, k): (3, 4)"},
+	}
+	for _, c := range panicCases {
+		caseName := fmt.Sprintf("f(%d,%d)", c.n, c.k)
+		t.Run(caseName, func(t *testing.T) {
+			defer func() {
+				err := recover()
+				if err != c.want {
+					t.Errorf("wanted panic: %#v, got panic: %#v", c.want, err)
+				}
+			}()
+
+			Combinations(c.n, c.k, func(pattern []int) {})
 		})
 	}
 }
@@ -137,6 +193,12 @@ func TestDupPermutations(t *testing.T) {
 	for _, c := range cases {
 		caseName := fmt.Sprintf("f(%d,%d)", c.n, c.k)
 		t.Run(caseName, func(t *testing.T) {
+			defer func() {
+				if err := recover(); err != nil {
+					t.Errorf("unwanted panic: %#v", err)
+				}
+			}()
+
 			got := make([][]int, 0)
 			DupPermutations(c.n, c.k, func(pattern []int) {
 				patternClone := make([]int, len(pattern))
@@ -147,6 +209,28 @@ func TestDupPermutations(t *testing.T) {
 			if !reflect.DeepEqual(got, c.want) {
 				t.Errorf("want: %v, got: %v", c.want, got)
 			}
+		})
+	}
+
+	panicCases := []struct {
+		n, k int
+		want string
+	}{
+		{-1, 0, "invalid arguments (n, k): (-1, 0)"},
+		{0, -1, "invalid arguments (n, k): (0, -1)"},
+		{3, 4, "invalid arguments (n, k): (3, 4)"},
+	}
+	for _, c := range panicCases {
+		caseName := fmt.Sprintf("f(%d,%d)", c.n, c.k)
+		t.Run(caseName, func(t *testing.T) {
+			defer func() {
+				err := recover()
+				if err != c.want {
+					t.Errorf("wanted panic: %#v, got panic: %#v", c.want, err)
+				}
+			}()
+
+			DupPermutations(c.n, c.k, func(pattern []int) {})
 		})
 	}
 }
@@ -188,6 +272,12 @@ func TestDupCombinations(t *testing.T) {
 	for _, c := range cases {
 		caseName := fmt.Sprintf("f(%d,%d)", c.n, c.k)
 		t.Run(caseName, func(t *testing.T) {
+			defer func() {
+				if err := recover(); err != nil {
+					t.Errorf("unwanted panic: %#v", err)
+				}
+			}()
+
 			got := make([][]int, 0)
 			DupCombinations(c.n, c.k, func(pattern []int) {
 				patternClone := make([]int, len(pattern))
@@ -198,6 +288,28 @@ func TestDupCombinations(t *testing.T) {
 			if !reflect.DeepEqual(got, c.want) {
 				t.Errorf("want: %v, got: %v", c.want, got)
 			}
+		})
+	}
+
+	panicCases := []struct {
+		n, k int
+		want string
+	}{
+		{-1, 0, "invalid arguments (n, k): (-1, 0)"},
+		{0, -1, "invalid arguments (n, k): (0, -1)"},
+		{3, 4, "invalid arguments (n, k): (3, 4)"},
+	}
+	for _, c := range panicCases {
+		caseName := fmt.Sprintf("f(%d,%d)", c.n, c.k)
+		t.Run(caseName, func(t *testing.T) {
+			defer func() {
+				err := recover()
+				if err != c.want {
+					t.Errorf("wanted panic: %#v, got panic: %#v", c.want, err)
+				}
+			}()
+
+			DupCombinations(c.n, c.k, func(pattern []int) {})
 		})
 	}
 }
@@ -218,6 +330,12 @@ func TestBitPatterns(t *testing.T) {
 	for _, c := range cases {
 		caseName := fmt.Sprintf("f(%d)", c.bitsLen)
 		t.Run(caseName, func(t *testing.T) {
+			defer func() {
+				if err := recover(); err != nil {
+					t.Errorf("unwanted panic: %#v", err)
+				}
+			}()
+
 			want := make([][]bool, len(c.want))
 			for iBits, strBits := range c.want {
 				bits := make([]bool, len(strBits))
@@ -237,6 +355,26 @@ func TestBitPatterns(t *testing.T) {
 			if !reflect.DeepEqual(got, want) {
 				t.Errorf("want: %v, got: %v", want, got)
 			}
+		})
+	}
+
+	panicCases := []struct {
+		bitsLen int
+		want    string
+	}{
+		{-1, "invalid bitsLen: -1"},
+	}
+	for _, c := range panicCases {
+		caseName := fmt.Sprintf("f(%d)", c.bitsLen)
+		t.Run(caseName, func(t *testing.T) {
+			defer func() {
+				err := recover()
+				if err != c.want {
+					t.Errorf("wanted panic: %#v, got panic: %#v", c.want, err)
+				}
+			}()
+
+			BitPatterns(c.bitsLen, func(bits []bool) {})
 		})
 	}
 }

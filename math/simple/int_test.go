@@ -39,10 +39,35 @@ func TestMin(t *testing.T) {
 	}
 	for _, c := range cases {
 		t.Run(fmt.Sprint(c.values), func(t *testing.T) {
+			defer func() {
+				if err := recover(); err != nil {
+					t.Errorf("unwanted panic: %#v", err)
+				}
+			}()
+
 			got := Min(c.values...)
 			if got != c.want {
 				t.Errorf("want: %d, got: %d", c.want, got)
 			}
+		})
+	}
+
+	panicCases := []struct {
+		values []int
+		want   string
+	}{
+		{[]int{}, "no values"},
+	}
+	for _, c := range panicCases {
+		t.Run(fmt.Sprint(c.values), func(t *testing.T) {
+			defer func() {
+				err := recover()
+				if err != c.want {
+					t.Errorf("wanted panic: %#v, got panic: %#v", c.want, err)
+				}
+			}()
+
+			Min(c.values...)
 		})
 	}
 }
@@ -61,10 +86,35 @@ func TestMax(t *testing.T) {
 	}
 	for _, c := range cases {
 		t.Run(fmt.Sprint(c.values), func(t *testing.T) {
+			defer func() {
+				if err := recover(); err != nil {
+					t.Errorf("unwanted panic: %#v", err)
+				}
+			}()
+
 			got := Max(c.values...)
 			if got != c.want {
 				t.Errorf("want: %d, got: %d", c.want, got)
 			}
+		})
+	}
+
+	panicCases := []struct {
+		values []int
+		want   string
+	}{
+		{[]int{}, "no values"},
+	}
+	for _, c := range panicCases {
+		t.Run(fmt.Sprint(c.values), func(t *testing.T) {
+			defer func() {
+				err := recover()
+				if err != c.want {
+					t.Errorf("wanted panic: %#v, got panic: %#v", c.want, err)
+				}
+			}()
+
+			Max(c.values...)
 		})
 	}
 }
@@ -79,12 +129,39 @@ func TestPow(t *testing.T) {
 		{-5, 0, 1}, {-5, 1, -5}, {-5, 2, 25}, {-5, 3, -125},
 	}
 	for _, c := range cases {
-		caseName := fmt.Sprintf("(%d)^%d", c.base, c.exponent)
+		caseName := fmt.Sprintf("(%d)^(%d)", c.base, c.exponent)
 		t.Run(caseName, func(t *testing.T) {
+			defer func() {
+				if err := recover(); err != nil {
+					t.Errorf("unwanted panic: %#v", err)
+				}
+			}()
+
 			got := Pow(c.base, c.exponent)
 			if got != c.want {
 				t.Errorf("want: %d, got: %d", c.want, got)
 			}
+		})
+	}
+
+	panicCases := []struct {
+		base     int
+		exponent int
+		want     string
+	}{
+		{5, -1, "invalid exponent: -1"},
+	}
+	for _, c := range panicCases {
+		caseName := fmt.Sprintf("(%d)^(%d)", c.base, c.exponent)
+		t.Run(caseName, func(t *testing.T) {
+			defer func() {
+				err := recover()
+				if err != c.want {
+					t.Errorf("wanted panic: %#v, got panic: %#v", c.want, err)
+				}
+			}()
+
+			Pow(c.base, c.exponent)
 		})
 	}
 }
@@ -113,10 +190,37 @@ func TestCeil(t *testing.T) {
 	for _, c := range cases {
 		caseName := fmt.Sprintf("Ceil[%d/%d]", c.divident, c.dividor)
 		t.Run(caseName, func(t *testing.T) {
+			defer func() {
+				if err := recover(); err != nil {
+					t.Errorf("unwanted panic: %#v", err)
+				}
+			}()
+
 			got := Ceil(c.divident, c.dividor)
 			if got != c.want {
 				t.Errorf("want: %d, got: %d", c.want, got)
 			}
+		})
+	}
+
+	panicCases := []struct {
+		divident int
+		dividor  int
+		want     string
+	}{
+		{1, 0, "divide by zero"},
+	}
+	for _, c := range panicCases {
+		caseName := fmt.Sprintf("Ceil[%d/%d]", c.divident, c.dividor)
+		t.Run(caseName, func(t *testing.T) {
+			defer func() {
+				err := recover()
+				if err != c.want {
+					t.Errorf("wanted panic: %#v, got panic: %#v", c.want, err)
+				}
+			}()
+
+			Ceil(c.divident, c.dividor)
 		})
 	}
 }
@@ -152,6 +256,12 @@ func TestEucDiv(t *testing.T) {
 				}
 			}
 
+			defer func() {
+				if err := recover(); err != nil {
+					t.Errorf("unwanted panic: %#v", err)
+				}
+			}()
+
 			quotient, remainder := EucDiv(c.divident, c.dividor)
 			if quotient != c.quotient {
 				t.Errorf("quotient want: %d, got: %d", c.quotient, quotient)
@@ -159,6 +269,27 @@ func TestEucDiv(t *testing.T) {
 			if remainder != c.remainder {
 				t.Errorf("remainder want: %d, got: %d", c.remainder, remainder)
 			}
+		})
+	}
+
+	panicCases := []struct {
+		divident int
+		dividor  int
+		want     string
+	}{
+		{1, 0, "divide by zero"},
+	}
+	for _, c := range panicCases {
+		caseName := fmt.Sprintf("(%d)_divided_by_(%d)", c.divident, c.dividor)
+		t.Run(caseName, func(t *testing.T) {
+			defer func() {
+				err := recover()
+				if err != c.want {
+					t.Errorf("wanted panic: %#v, got panic: %#v", c.want, err)
+				}
+			}()
+
+			EucDiv(c.divident, c.dividor)
 		})
 	}
 }
