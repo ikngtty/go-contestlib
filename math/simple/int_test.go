@@ -142,6 +142,7 @@ func TestEucDiv(t *testing.T) {
 	for _, c := range cases {
 		caseName := fmt.Sprintf("(%d)_divided_by_(%d)", c.divident, c.dividor)
 		t.Run(caseName, func(t *testing.T) {
+			// assert the expectation
 			{
 				divident := c.quotient*c.dividor + c.remainder
 				if divident != c.divident {
