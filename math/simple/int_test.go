@@ -151,7 +151,7 @@ func TestEucDiv(t *testing.T) {
 			}
 			{
 				maxRem := Abs(c.dividor)
-				if c.remainder < 0 || c.remainder >= Abs(c.dividor) {
+				if c.remainder < 0 || c.remainder >= maxRem {
 					t.Fatalf("wrong expectation: remainder %d should be between 0<= and <%d",
 						c.remainder, maxRem)
 				}
