@@ -48,6 +48,9 @@ func (m Mod) Inv(n int) int {
 func (mod Mod) Invs(n int) []int {
 	m := mod.modulus
 
+	if n < 0 {
+		panic(fmt.Sprintf("invalid length: %d", n))
+	}
 	if n > m {
 		panic(fmt.Sprintf("inverses more than %d are redundant", m))
 	}
