@@ -29,19 +29,19 @@ func TestModReg(t *testing.T) {
 }
 
 func TestModInv(t *testing.T) {
-	const modulus = 13
-
 	cases := []struct {
-		n    int
-		want int
+		modulus int
+		n       int
+		want    int
 	}{
-		{1, 1}, {2, 7}, {3, 9}, {4, 10}, {5, 8}, {6, 11},
-		{7, 2}, {8, 5}, {9, 3}, {10, 4}, {11, 6}, {12, 12},
-		{-1, 12}, {-2, 6}, {14, 1}, {15, 7},
+		{13, 1, 1}, {13, 2, 7}, {13, 3, 9}, {13, 4, 10}, {13, 5, 8}, {13, 6, 11},
+		{13, 7, 2}, {13, 8, 5}, {13, 9, 3}, {13, 10, 4}, {13, 11, 6}, {13, 12, 12},
+		{13, -1, 12}, {13, -2, 6}, {13, 14, 1}, {13, 15, 7},
+		{10, 3, 7},
 	}
 	for _, c := range cases {
-		t.Run(fmt.Sprintf("(%d)^(-1)mod%d", c.n, modulus), func(t *testing.T) {
-			m := NewMod(modulus)
+		t.Run(fmt.Sprintf("(%d)^(-1)mod%d", c.n, c.modulus), func(t *testing.T) {
+			m := NewMod(c.modulus)
 			got := m.Inv(c.n)
 			if got != c.want {
 				t.Errorf("want: %d, got: %d", c.want, got)
