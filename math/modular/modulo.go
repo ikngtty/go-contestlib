@@ -77,3 +77,19 @@ func (mod Mod) Factorial(n int) int {
 	}
 	return fact
 }
+
+// Factorials returns the factorial number of [0, 1, ..., n-1].
+func (mod Mod) Factorials(n int) []int {
+	if n < 0 {
+		panic(fmt.Sprintf("invalid length: %d", n))
+	}
+
+	facts := make([]int, n)
+	if n > 0 {
+		facts[0] = 1
+	}
+	for i := 1; i < n; i++ {
+		facts[i] = mod.Reg(facts[i-1] * i)
+	}
+	return facts
+}

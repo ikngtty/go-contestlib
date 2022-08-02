@@ -185,3 +185,53 @@ func TestModFactorial(t *testing.T) {
 		})
 	}
 }
+
+func TestModFactorials(t *testing.T) {
+	const modulus = 13
+
+	cases := []struct {
+		n    int
+		want []int
+	}{
+		{0, []int{}},
+		{1, []int{1}},
+		{2, []int{1, 1}},
+		{3, []int{1, 1, 2}},
+		{6, []int{1, 1, 2, 6, 11, 3}},
+	}
+	for _, c := range cases {
+		t.Run(strconv.Itoa(c.n), func(t *testing.T) {
+			defer func() {
+				if err := recover(); err != nil {
+					t.Errorf("unwanted panic: %#v", err)
+				}
+			}()
+
+			m := NewMod(modulus)
+			got := m.Factorials(c.n)
+			if !reflect.DeepEqual(got, c.want) {
+				t.Errorf("want: %v, got: %v", c.want, got)
+			}
+		})
+	}
+
+	panicCases := []struct {
+		n    int
+		want string
+	}{
+		{-1, "invalid length: -1"},
+	}
+	for _, c := range panicCases {
+		t.Run(strconv.Itoa(c.n), func(t *testing.T) {
+			defer func() {
+				err := recover()
+				if err != c.want {
+					t.Errorf("wanted panic: %#v, got panic: %#v", c.want, err)
+				}
+			}()
+
+			m := NewMod(modulus)
+			m.Factorials(c.n)
+		})
+	}
+}
