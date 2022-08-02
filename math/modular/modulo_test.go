@@ -139,3 +139,49 @@ func TestModInvs(t *testing.T) {
 		})
 	}
 }
+
+func TestModFactorial(t *testing.T) {
+	cases := []struct {
+		modulus int
+		n       int
+		want    int
+	}{
+		{13, 0, 1}, {13, 1, 1}, {13, 2, 2}, {13, 3, 6}, {13, 4, 11}, {13, 5, 3},
+	}
+	for _, c := range cases {
+		t.Run(fmt.Sprintf("(%d)!mod%d", c.n, c.modulus), func(t *testing.T) {
+			defer func() {
+				if err := recover(); err != nil {
+					t.Errorf("unwanted panic: %#v", err)
+				}
+			}()
+
+			m := NewMod(c.modulus)
+			got := m.Factorial(c.n)
+			if got != c.want {
+				t.Errorf("want: %d, got: %d", c.want, got)
+			}
+		})
+	}
+
+	panicCases := []struct {
+		modulus int
+		n       int
+		want    string
+	}{
+		{13, -1, "invalid n: -1"},
+	}
+	for _, c := range panicCases {
+		t.Run(fmt.Sprintf("(%d)!mod%d", c.n, c.modulus), func(t *testing.T) {
+			defer func() {
+				err := recover()
+				if err != c.want {
+					t.Errorf("wanted panic: %#v, got panic: %#v", c.want, err)
+				}
+			}()
+
+			m := NewMod(c.modulus)
+			m.Factorial(c.n)
+		})
+	}
+}
