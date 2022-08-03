@@ -2,6 +2,7 @@ package modular
 
 import "fmt"
 
+// TablesForCombiCount holds tables to calculate combination counts.
 type TablesForCombiCount struct {
 	mod           Mod
 	length        int
@@ -10,6 +11,7 @@ type TablesForCombiCount struct {
 	factorialInvs []int
 }
 
+// NewTablesForCombiCount returns a new TablesForCombiCount.
 func NewTablesForCombiCount(mod Mod, length int) *TablesForCombiCount {
 	if length < 0 {
 		panic(fmt.Sprintf("invalid length: %d", length))
@@ -17,6 +19,7 @@ func NewTablesForCombiCount(mod Mod, length int) *TablesForCombiCount {
 	return &TablesForCombiCount{mod, length, nil, nil, nil}
 }
 
+// Factorials returns a factorial table.
 func (t TablesForCombiCount) Factorials() []int {
 	if t.factorials == nil {
 		t.factorials = t.mod.Factorials(t.length)
@@ -24,10 +27,12 @@ func (t TablesForCombiCount) Factorials() []int {
 	return t.factorials
 }
 
+// SetFactorials sets a factorial table.
 func (t TablesForCombiCount) SetFactorials(factorials []int) {
 	t.factorials = factorials
 }
 
+// Invs returns an inverse table.
 func (t TablesForCombiCount) Invs() []int {
 	if t.invs == nil {
 		t.invs = t.mod.Invs(t.length)
@@ -35,10 +40,12 @@ func (t TablesForCombiCount) Invs() []int {
 	return t.invs
 }
 
+// SetInvs sets an inverse table.
 func (t TablesForCombiCount) SetInvs(invs []int) {
 	t.invs = invs
 }
 
+// FactorialInvs returns a factorial inverse table.
 func (t TablesForCombiCount) FactorialInvs() []int {
 	if t.factorialInvs == nil {
 		t.factorialInvs = make([]int, t.length)
@@ -54,10 +61,12 @@ func (t TablesForCombiCount) FactorialInvs() []int {
 	return t.factorialInvs
 }
 
+// SetFactorialInvs sets a factorial inverse table.
 func (t TablesForCombiCount) SetFactorialInvs(factorialInvs []int) {
 	t.factorialInvs = factorialInvs
 }
 
+// Calc returns a combination count.
 func (t TablesForCombiCount) Calc(n, k int) int {
 	if n < 0 || k < 0 || n < k {
 		panic(fmt.Sprintf("invalid arguments (n, k): (%d, %d)", n, k))
