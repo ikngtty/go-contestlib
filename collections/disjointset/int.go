@@ -9,7 +9,7 @@ type DisjointSetForest struct {
 func NewDisjointSetForest(n int) *DisjointSetForest {
 	parent := make([]int, n)
 	for i := range parent {
-		parent[i] = i
+		parent[i] = -1
 	}
 
 	size := make([]int, n)
@@ -20,8 +20,14 @@ func NewDisjointSetForest(n int) *DisjointSetForest {
 	return &DisjointSetForest{n, parent, size}
 }
 
+func (f *DisjointSetForest) Add(x int) {
+	f.parent[x] = x
+}
+
 func (f *DisjointSetForest) Root(x int) int {
-	if f.parent[x] == x {
+	if f.parent[x] == -1 {
+		return -1
+	} else if f.parent[x] == x {
 		return x
 	}
 	f.parent[x] = f.Root(f.parent[x])
@@ -50,4 +56,24 @@ func (f *DisjointSetForest) Merge(x, y int) {
 
 func (f *DisjointSetForest) Same(x, y int) bool {
 	return f.Root(x) == f.Root(y)
+}
+
+func (f *DisjointSetForest) Count() int {
+	roots := make([]bool, f.n)
+	for i := 0; i < f.n; i++ {
+		root := f.Root(i)
+		if root == -1 {
+			continue
+		}
+
+		roots[root] = true
+	}
+
+	count := 0
+	for _, exist := range roots {
+		if exist {
+			count++
+		}
+	}
+	return count
 }
