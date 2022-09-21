@@ -21,7 +21,9 @@ func NewDisjointSetForest(n int) *DisjointSetForest {
 }
 
 func (f *DisjointSetForest) Add(x int) {
-	f.parent[x] = x
+	if f.parent[x] == -1 {
+		f.parent[x] = x
+	}
 }
 
 func (f *DisjointSetForest) Root(x int) int {
