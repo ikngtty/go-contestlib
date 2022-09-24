@@ -30,22 +30,85 @@ func TestNewIntListFromArray(t *testing.T) {
 	}
 }
 
-func TestIntListAdd(t *testing.T) {
+func TestIntListPush(t *testing.T) {
 	got := newIntList0()
 
-	got.Add(10)
-	t.Run("1st add", func(t *testing.T) {
+	got.Push(10)
+	t.Run("1st push", func(t *testing.T) {
 		assertEqual(t, newIntList1(10), got)
 	})
 
-	got.Add(20)
-	t.Run("2nd add", func(t *testing.T) {
+	got.Push(20)
+	t.Run("2nd push", func(t *testing.T) {
 		assertEqual(t, newIntList2(10, 20), got)
 	})
 
-	got.Add(30)
-	t.Run("3rd add", func(t *testing.T) {
+	got.Push(30)
+	t.Run("3rd push", func(t *testing.T) {
 		assertEqual(t, newIntList3(10, 20, 30), got)
+	})
+}
+
+func TestIntListPushLeft(t *testing.T) {
+	got := newIntList0()
+
+	got.PushLeft(10)
+	t.Run("1st push", func(t *testing.T) {
+		assertEqual(t, newIntList1(10), got)
+	})
+
+	got.PushLeft(20)
+	t.Run("2nd push", func(t *testing.T) {
+		assertEqual(t, newIntList2(20, 10), got)
+	})
+
+	got.PushLeft(30)
+	t.Run("3rd push", func(t *testing.T) {
+		assertEqual(t, newIntList3(30, 20, 10), got)
+	})
+}
+
+func TestIntListPop(t *testing.T) {
+	got := newIntList3(10, 20, 30)
+
+	value := got.Pop()
+	t.Run("1st pop", func(t *testing.T) {
+		assertEqual(t, 30, value)
+		assertEqual(t, newIntList2(10, 20), got)
+	})
+
+	value = got.Pop()
+	t.Run("2nd pop", func(t *testing.T) {
+		assertEqual(t, 20, value)
+		assertEqual(t, newIntList1(10), got)
+	})
+
+	value = got.Pop()
+	t.Run("3rd pop", func(t *testing.T) {
+		assertEqual(t, 10, value)
+		assertEqual(t, newIntList0(), got)
+	})
+}
+
+func TestIntListPopLeft(t *testing.T) {
+	got := newIntList3(10, 20, 30)
+
+	value := got.PopLeft()
+	t.Run("1st pop", func(t *testing.T) {
+		assertEqual(t, 10, value)
+		assertEqual(t, newIntList2(20, 30), got)
+	})
+
+	value = got.PopLeft()
+	t.Run("2nd pop", func(t *testing.T) {
+		assertEqual(t, 20, value)
+		assertEqual(t, newIntList1(30), got)
+	})
+
+	value = got.PopLeft()
+	t.Run("3rd pop", func(t *testing.T) {
+		assertEqual(t, 30, value)
+		assertEqual(t, newIntList0(), got)
 	})
 }
 
@@ -88,6 +151,7 @@ func TestIntListConcat(t *testing.T) {
 		t.Run(c.name, func(t *testing.T) {
 			c.left.Concat(c.right)
 			assertEqual(t, c.want, c.left)
+			assertEqual(t, c.want, c.right)
 		})
 	}
 }
@@ -146,27 +210,33 @@ func newIntList0() *IntList {
 }
 
 func newIntList1(value1 int) *IntList {
-	node1 := intListNode{child: nil, value: value1}
+	node1 := intListNode{parent: nil, child: nil, value: value1}
 	return &IntList{first: &node1, last: &node1, len: 1}
 }
 
 func newIntList2(value1, value2 int) *IntList {
-	node2 := intListNode{child: nil, value: value2}
-	node1 := intListNode{child: &node2, value: value1}
+	node1 := intListNode{parent: nil, child: nil, value: value1}
+	node2 := intListNode{parent: &node1, child: nil, value: value2}
+	node1.child = &node2
 	return &IntList{first: &node1, last: &node2, len: 2}
 }
 
 func newIntList3(value1, value2, value3 int) *IntList {
-	node3 := intListNode{child: nil, value: value3}
-	node2 := intListNode{child: &node3, value: value2}
-	node1 := intListNode{child: &node2, value: value1}
+	node1 := intListNode{parent: nil, child: nil, value: value1}
+	node2 := intListNode{parent: &node1, child: nil, value: value2}
+	node1.child = &node2
+	node3 := intListNode{parent: &node2, child: nil, value: value3}
+	node2.child = &node3
 	return &IntList{first: &node1, last: &node3, len: 3}
 }
 
 func newIntList4(value1, value2, value3, value4 int) *IntList {
-	node4 := intListNode{child: nil, value: value4}
-	node3 := intListNode{child: &node4, value: value3}
-	node2 := intListNode{child: &node3, value: value2}
-	node1 := intListNode{child: &node2, value: value1}
+	node1 := intListNode{parent: nil, child: nil, value: value1}
+	node2 := intListNode{parent: &node1, child: nil, value: value2}
+	node1.child = &node2
+	node3 := intListNode{parent: &node2, child: nil, value: value3}
+	node2.child = &node3
+	node4 := intListNode{parent: &node3, child: nil, value: value4}
+	node3.child = &node4
 	return &IntList{first: &node1, last: &node4, len: 4}
 }

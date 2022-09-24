@@ -8,8 +8,9 @@ type IntList struct {
 }
 
 type intListNode struct {
-	child *intListNode
-	value int
+	parent *intListNode
+	child  *intListNode
+	value  int
 }
 
 // NewIntList returns a new IntList.
@@ -17,31 +18,74 @@ func NewIntList() *IntList {
 	return &IntList{nil, nil, 0}
 }
 
-// NewIntListFromArray returns a new IntList having the values "a" has.
+// NewIntListFromArray returns a new IntList having the values `a` has.
 func NewIntListFromArray(a []int) *IntList {
 	list := NewIntList()
 	for _, elem := range a {
-		list.Add(elem)
+		list.Push(elem)
 	}
 	return list
 }
 
-// Len returns length of the list.
+// Len returns the length of the list.
 func (list *IntList) Len() int {
 	return list.len
 }
 
-// Add adds elem to the list.
-func (list *IntList) Add(elem int) {
-	node := intListNode{nil, elem}
+// Push pushes elem to the end of the list.
+func (list *IntList) Push(elem int) {
+	node := intListNode{list.last, nil, elem}
 	if list.first == nil {
 		list.first = &node
-		list.last = &node
 	} else {
 		list.last.child = &node
-		list.last = &node
 	}
+	list.last = &node
 	list.len++
+}
+
+// PushLeft pushes elem to the beginning of the list.
+func (list *IntList) PushLeft(elem int) {
+	node := intListNode{nil, list.first, elem}
+	if list.last == nil {
+		list.last = &node
+	} else {
+		list.first.parent = &node
+	}
+	list.first = &node
+	list.len++
+}
+
+// Pop pops elem from the end of the list.
+func (list *IntList) Pop() int {
+	if list.last == nil {
+		panic("no item")
+	}
+	value := list.last.value
+	list.last = list.last.parent
+	if list.last == nil {
+		list.first = nil
+	} else {
+		list.last.child = nil
+	}
+	list.len--
+	return value
+}
+
+// PopLeft pops elem from the beginning of the list.
+func (list *IntList) PopLeft() int {
+	if list.first == nil {
+		panic("no item")
+	}
+	value := list.first.value
+	list.first = list.first.child
+	if list.first == nil {
+		list.last = nil
+	} else {
+		list.first.parent = nil
+	}
+	list.len--
+	return value
 }
 
 // Concat concatenates the list and the other.
@@ -49,11 +93,14 @@ func (list *IntList) Concat(other *IntList) {
 	if list.first == nil {
 		*list = *other
 	} else if other.first == nil {
-		// Do nothing
+		*other = *list
 	} else {
 		list.last.child = other.first
+		other.first.parent = list.last
 		list.last = other.last
+		other.first = list.first
 		list.len += other.len
+		other.len = list.len
 	}
 }
 
@@ -68,7 +115,7 @@ func (list *IntList) Each(f func(elem int)) {
 
 // ToA converts the list to an array.
 func (list *IntList) ToA() []int {
-	a := make([]int, list.Len())
+	a := make([]int, list.len)
 	{
 		index := 0
 		list.Each(func(elem int) {
