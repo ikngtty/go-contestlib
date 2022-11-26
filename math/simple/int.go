@@ -46,11 +46,16 @@ func Pow(base, exponent int) int {
 		panic(fmt.Sprintf("invalid exponent: %d", exponent))
 	}
 
-	answer := 1
-	for i := 0; i < exponent; i++ {
-		answer *= base
+	if exponent == 0 {
+		return 1
 	}
-	return answer
+
+	if exponent%2 == 0 {
+		half := Pow(base, exponent/2)
+		return half * half
+	} else {
+		return base * Pow(base, exponent-1)
+	}
 }
 
 // Ceil returns ceil(divident/dividor).
