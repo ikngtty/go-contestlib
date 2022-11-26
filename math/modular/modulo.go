@@ -93,3 +93,21 @@ func (mod Mod) Factorials(n int) []int {
 	}
 	return facts
 }
+
+// Pow returns base^exponent.
+func (mod Mod) Pow(base, exponent int) int {
+	if exponent < 0 {
+		panic(fmt.Sprintf("invalid exponent: %d", exponent))
+	}
+
+	if exponent == 0 {
+		return 1
+	}
+
+	if exponent%2 == 0 {
+		half := mod.Pow(base, exponent/2)
+		return mod.Reg(half * half)
+	} else {
+		return mod.Reg(base * mod.Pow(base, exponent-1))
+	}
+}

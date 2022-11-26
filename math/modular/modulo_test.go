@@ -235,3 +235,51 @@ func TestModFactorials(t *testing.T) {
 		})
 	}
 }
+
+func TestModPow(t *testing.T) {
+	const modulus = 101
+	const base = 5
+
+	cases := []struct {
+		exponent int
+		want     int
+	}{
+		{0, 1}, {1, 5}, {2, 25}, {3, 24}, {4, 19}, {5, 95}, {6, 71},
+		{7, 52}, {8, 58}, {9, 88}, {10, 36},
+	}
+	for _, c := range cases {
+		t.Run(fmt.Sprintf("%d^%dmod%d", base, c.exponent, modulus), func(t *testing.T) {
+			defer func() {
+				if err := recover(); err != nil {
+					t.Errorf("unwanted panic: %#v", err)
+				}
+			}()
+
+			m := NewMod(modulus)
+			got := m.Pow(base, c.exponent)
+			if got != c.want {
+				t.Errorf("want: %d, got: %d", c.want, got)
+			}
+		})
+	}
+
+	panicCases := []struct {
+		exponent int
+		want     string
+	}{
+		{-1, "invalid exponent: -1"},
+	}
+	for _, c := range panicCases {
+		t.Run(fmt.Sprintf("%d^%dmod%d", base, c.exponent, modulus), func(t *testing.T) {
+			defer func() {
+				err := recover()
+				if err != c.want {
+					t.Errorf("wanted panic: %#v, got panic: %#v", c.want, err)
+				}
+			}()
+
+			m := NewMod(modulus)
+			m.Pow(base, c.exponent)
+		})
+	}
+}
