@@ -20,7 +20,7 @@ func NewTablesForCombiCount(mod Mod, length int) *TablesForCombiCount {
 }
 
 // Factorials returns a factorial table.
-func (t TablesForCombiCount) Factorials() []int {
+func (t *TablesForCombiCount) Factorials() []int {
 	if t.factorials == nil {
 		t.factorials = t.mod.Factorials(t.length)
 	}
@@ -28,12 +28,12 @@ func (t TablesForCombiCount) Factorials() []int {
 }
 
 // SetFactorials sets a factorial table.
-func (t TablesForCombiCount) SetFactorials(factorials []int) {
+func (t *TablesForCombiCount) SetFactorials(factorials []int) {
 	t.factorials = factorials
 }
 
 // Invs returns an inverse table.
-func (t TablesForCombiCount) Invs() []int {
+func (t *TablesForCombiCount) Invs() []int {
 	if t.invs == nil {
 		t.invs = t.mod.Invs(t.length)
 	}
@@ -41,12 +41,12 @@ func (t TablesForCombiCount) Invs() []int {
 }
 
 // SetInvs sets an inverse table.
-func (t TablesForCombiCount) SetInvs(invs []int) {
+func (t *TablesForCombiCount) SetInvs(invs []int) {
 	t.invs = invs
 }
 
 // FactorialInvs returns a factorial inverse table.
-func (t TablesForCombiCount) FactorialInvs() []int {
+func (t *TablesForCombiCount) FactorialInvs() []int {
 	if t.factorialInvs == nil {
 		t.factorialInvs = make([]int, t.length)
 		if t.length == 0 {
@@ -62,12 +62,12 @@ func (t TablesForCombiCount) FactorialInvs() []int {
 }
 
 // SetFactorialInvs sets a factorial inverse table.
-func (t TablesForCombiCount) SetFactorialInvs(factorialInvs []int) {
+func (t *TablesForCombiCount) SetFactorialInvs(factorialInvs []int) {
 	t.factorialInvs = factorialInvs
 }
 
 // Calc returns a combination count.
-func (t TablesForCombiCount) Calc(n, k int) int {
+func (t *TablesForCombiCount) Calc(n, k int) int {
 	if n < 0 || k < 0 || n < k {
 		panic(fmt.Sprintf("invalid arguments (n, k): (%d, %d)", n, k))
 	}
