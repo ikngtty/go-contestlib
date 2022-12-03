@@ -100,3 +100,23 @@ func EucRem(divident, dividor int) int {
 	}
 	return rem
 }
+
+// GCD returns the Greatest Common Divisor.
+func GCD(a, b int) int {
+	if a <= 0 {
+		panic(fmt.Sprintf("invalid value: %d", a))
+	}
+	if b <= 0 {
+		panic(fmt.Sprintf("invalid value: %d", b))
+	}
+
+	var body func(a, b int) int
+	body = func(a, b int) int {
+		r := a % b
+		if r == 0 {
+			return b
+		}
+		return body(b, r)
+	}
+	return body(a, b)
+}

@@ -299,3 +299,52 @@ func TestEucDiv(t *testing.T) {
 func TestEucRem(t *testing.T) {
 	// check TestEucDiv
 }
+
+func TestGCD(t *testing.T) {
+	cases := []struct {
+		a    int
+		b    int
+		want int
+	}{
+		{700, 42, 14}, {42, 700, 14}, {42, 42, 42}, {42, 1, 1}, {1, 1, 1},
+	}
+	for _, c := range cases {
+		caseName := fmt.Sprintf("GCD(%d,%d)", c.a, c.b)
+		t.Run(caseName, func(t *testing.T) {
+			defer func() {
+				if err := recover(); err != nil {
+					t.Errorf("unwanted panic: %#v", err)
+				}
+			}()
+
+			got := GCD(c.a, c.b)
+			if got != c.want {
+				t.Errorf("want: %d, got: %d", c.want, got)
+			}
+		})
+	}
+
+	panicCases := []struct {
+		a    int
+		b    int
+		want string
+	}{
+		{1, 0, "invalid value: 0"},
+		{1, -1, "invalid value: -1"},
+		{0, 1, "invalid value: 0"},
+		{-1, 1, "invalid value: -1"},
+	}
+	for _, c := range panicCases {
+		caseName := fmt.Sprintf("GCD(%d,%d)", c.a, c.b)
+		t.Run(caseName, func(t *testing.T) {
+			defer func() {
+				err := recover()
+				if err != c.want {
+					t.Errorf("wanted panic: %#v, got panic: %#v", c.want, err)
+				}
+			}()
+
+			GCD(c.a, c.b)
+		})
+	}
+}
