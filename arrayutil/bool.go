@@ -30,3 +30,12 @@ func Make2DBools(xLen, yLen int, initVal bool) [][]bool {
 
 	return a
 }
+
+// Copy2DBools copy the two-dimensional bool array.
+func Copy2DBools(dst *[][]bool, src [][]bool) {
+	*dst = make([][]bool, len(src))
+	for i := 0; i < len(src); i++ {
+		(*dst)[i] = make([]bool, len(src[i]))
+		copy((*dst)[i], src[i])
+	}
+}

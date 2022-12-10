@@ -30,3 +30,12 @@ func Make2DInts(xLen, yLen int, initVal int) [][]int {
 
 	return a
 }
+
+// Copy2DInts copy the two-dimensional int array.
+func Copy2DInts(dst *[][]int, src [][]int) {
+	*dst = make([][]int, len(src))
+	for i := 0; i < len(src); i++ {
+		(*dst)[i] = make([]int, len(src[i]))
+		copy((*dst)[i], src[i])
+	}
+}
