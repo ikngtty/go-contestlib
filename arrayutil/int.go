@@ -1,7 +1,7 @@
 package arrayutil
 
-// MakeIntArray returns a slice of the int array.
-func MakeIntArray(length int, initVal int) []int {
+// MakeInts returns a slice of the int array.
+func MakeInts(length int, initVal int) []int {
 	a := make([]int, length)
 
 	if initVal != 0 {
@@ -13,8 +13,8 @@ func MakeIntArray(length int, initVal int) []int {
 	return a
 }
 
-// Make2DIntArray returns a slice of the two-dimensional int array.
-func Make2DIntArray(xLen, yLen int, initVal int) [][]int {
+// Make2DInts returns a slice of the two-dimensional int array.
+func Make2DInts(xLen, yLen int, initVal int) [][]int {
 	a := make([][]int, xLen)
 	for x := 0; x < xLen; x++ {
 		a[x] = make([]int, yLen)

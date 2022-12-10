@@ -1,7 +1,7 @@
 package arrayutil
 
-// MakeBoolArray returns a slice of the bool array.
-func MakeBoolArray(length int, initVal bool) []bool {
+// MakeBools returns a slice of the bool array.
+func MakeBools(length int, initVal bool) []bool {
 	a := make([]bool, length)
 
 	if initVal {
@@ -13,8 +13,8 @@ func MakeBoolArray(length int, initVal bool) []bool {
 	return a
 }
 
-// Make2DBoolArray returns a slice of the two-dimensional bool array.
-func Make2DBoolArray(xLen, yLen int, initVal bool) [][]bool {
+// Make2DBools returns a slice of the two-dimensional bool array.
+func Make2DBools(xLen, yLen int, initVal bool) [][]bool {
 	a := make([][]bool, xLen)
 	for x := 0; x < xLen; x++ {
 		a[x] = make([]bool, yLen)
