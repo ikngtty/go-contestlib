@@ -1,26 +1,26 @@
 package list
 
-// IntList is a list of int.
-type IntList struct {
-	first *intListNode
-	last  *intListNode
+// ListInt is a list of int.
+type ListInt struct {
+	first *listIntNode
+	last  *listIntNode
 	len   int
 }
 
-type intListNode struct {
-	parent *intListNode
-	child  *intListNode
+type listIntNode struct {
+	parent *listIntNode
+	child  *listIntNode
 	value  int
 }
 
-// NewIntList returns a new IntList.
-func NewIntList() *IntList {
-	return &IntList{nil, nil, 0}
+// NewListInt returns a new ListInt.
+func NewListInt() *ListInt {
+	return &ListInt{nil, nil, 0}
 }
 
-// NewIntListFromArray returns a new IntList having the values `a` has.
-func NewIntListFromArray(a []int) *IntList {
-	list := NewIntList()
+// NewListIntFromArray returns a new ListInt having the values `a` has.
+func NewListIntFromArray(a []int) *ListInt {
+	list := NewListInt()
 	for _, elem := range a {
 		list.Push(elem)
 	}
@@ -28,13 +28,13 @@ func NewIntListFromArray(a []int) *IntList {
 }
 
 // Len returns the length of the list.
-func (list *IntList) Len() int {
+func (list *ListInt) Len() int {
 	return list.len
 }
 
 // Push pushes elem to the end of the list.
-func (list *IntList) Push(elem int) {
-	node := intListNode{list.last, nil, elem}
+func (list *ListInt) Push(elem int) {
+	node := listIntNode{list.last, nil, elem}
 	if list.first == nil {
 		list.first = &node
 	} else {
@@ -45,8 +45,8 @@ func (list *IntList) Push(elem int) {
 }
 
 // PushLeft pushes elem to the beginning of the list.
-func (list *IntList) PushLeft(elem int) {
-	node := intListNode{nil, list.first, elem}
+func (list *ListInt) PushLeft(elem int) {
+	node := listIntNode{nil, list.first, elem}
 	if list.last == nil {
 		list.last = &node
 	} else {
@@ -57,7 +57,7 @@ func (list *IntList) PushLeft(elem int) {
 }
 
 // Pop pops elem from the end of the list.
-func (list *IntList) Pop() int {
+func (list *ListInt) Pop() int {
 	if list.last == nil {
 		panic("no item")
 	}
@@ -73,7 +73,7 @@ func (list *IntList) Pop() int {
 }
 
 // PopLeft pops elem from the beginning of the list.
-func (list *IntList) PopLeft() int {
+func (list *ListInt) PopLeft() int {
 	if list.first == nil {
 		panic("no item")
 	}
@@ -89,7 +89,7 @@ func (list *IntList) PopLeft() int {
 }
 
 // Concat concatenates the list and the other.
-func (list *IntList) Concat(other *IntList) {
+func (list *ListInt) Concat(other *ListInt) {
 	if list.first == nil {
 		*list = *other
 	} else if other.first == nil {
@@ -105,7 +105,7 @@ func (list *IntList) Concat(other *IntList) {
 }
 
 // Each applies f for every element in the list.
-func (list *IntList) Each(f func(elem int)) {
+func (list *ListInt) Each(f func(elem int)) {
 	cur := list.first
 	for cur != nil {
 		f(cur.value)
@@ -114,7 +114,7 @@ func (list *IntList) Each(f func(elem int)) {
 }
 
 // ToA converts the list to an array.
-func (list *IntList) ToA() []int {
+func (list *ListInt) ToA() []int {
 	a := make([]int, list.len)
 	{
 		index := 0
