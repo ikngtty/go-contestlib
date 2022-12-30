@@ -71,7 +71,7 @@ func testBalanced(t *testing.T, node *avlMapIntIntNode) {
 	}
 }
 
-func TestPutSmall(t *testing.T) {
+func TestMapPutSmall(t *testing.T) {
 	const size = 20
 	m := theAVLMapIntInt(size)
 	t.Log(m)
@@ -84,7 +84,7 @@ func TestPutSmall(t *testing.T) {
 	}
 }
 
-func TestPutLarge(t *testing.T) {
+func TestMapPutLarge(t *testing.T) {
 	const size = 100000
 	m := theAVLMapIntInt(size)
 
@@ -96,7 +96,7 @@ func TestPutLarge(t *testing.T) {
 	}
 }
 
-func TestPutSameKey(t *testing.T) {
+func TestMapPutSameKey(t *testing.T) {
 	const size = 20
 	m := theAVLMapIntInt(size)
 	const key = 8
@@ -113,7 +113,7 @@ func TestPutSameKey(t *testing.T) {
 	}
 }
 
-func TestDeleteSmall(t *testing.T) {
+func TestMapDeleteSmall(t *testing.T) {
 	m := theAVLMapIntInt(10)
 	deleteAndTest := func(key int) {
 		m.Delete(key)
@@ -136,7 +136,7 @@ func TestDeleteSmall(t *testing.T) {
 	}
 }
 
-func TestDeleteLarge(t *testing.T) {
+func TestMapDeleteLarge(t *testing.T) {
 	const size = 100000
 	m := theAVLMapIntInt(size)
 	const deleteSize = 10000
@@ -153,7 +153,7 @@ func TestDeleteLarge(t *testing.T) {
 	}
 }
 
-func TestGet(t *testing.T) {
+func TestMapGet(t *testing.T) {
 	m := theAVLMapIntInt(20)
 
 	t.Run("exist key", func(t *testing.T) {
@@ -179,7 +179,7 @@ func TestGet(t *testing.T) {
 	})
 }
 
-func TestMostLeft(t *testing.T) {
+func TestMapMostLeft(t *testing.T) {
 	m := theAVLMapIntInt(20)
 	m.Delete(0)
 
@@ -194,7 +194,7 @@ func TestMostLeft(t *testing.T) {
 	}
 }
 
-func TestMostRight(t *testing.T) {
+func TestMapMostRight(t *testing.T) {
 	m := theAVLMapIntInt(20)
 
 	const wantedKey = 38
@@ -208,7 +208,7 @@ func TestMostRight(t *testing.T) {
 	}
 }
 
-func TestFloor(t *testing.T) {
+func TestMapFloor(t *testing.T) {
 	m := theAVLMapIntInt(20)
 
 	t.Run("exist key", func(t *testing.T) {
@@ -252,7 +252,7 @@ func TestFloor(t *testing.T) {
 	})
 }
 
-func TestCeiling(t *testing.T) {
+func TestMapCeiling(t *testing.T) {
 	m := theAVLMapIntInt(20)
 
 	t.Run("exist key", func(t *testing.T) {
@@ -296,7 +296,7 @@ func TestCeiling(t *testing.T) {
 	})
 }
 
-func TestIterator(t *testing.T) {
+func TestMapIterator(t *testing.T) {
 	const size = 10
 	m := theAVLMapIntInt(size)
 
@@ -326,7 +326,7 @@ func TestIterator(t *testing.T) {
 	}
 }
 
-func TestIteratorReverse(t *testing.T) {
+func TestMapIteratorReverse(t *testing.T) {
 	const size = 10
 	m := theAVLMapIntInt(size)
 
@@ -356,7 +356,7 @@ func TestIteratorReverse(t *testing.T) {
 	}
 }
 
-func TestIteratorFrom(t *testing.T) {
+func TestMapIteratorFrom(t *testing.T) {
 	const size = 20
 	const skipCount = 5
 	m := theAVLMapIntInt(size)
@@ -387,7 +387,7 @@ func TestIteratorFrom(t *testing.T) {
 	}
 }
 
-func TestIteratorReverseFrom(t *testing.T) {
+func TestMapIteratorReverseFrom(t *testing.T) {
 	const size = 20
 	const skipCount = 5
 	m := theAVLMapIntInt(size)
@@ -418,7 +418,7 @@ func TestIteratorReverseFrom(t *testing.T) {
 	}
 }
 
-func TestString(t *testing.T) {
+func TestMapString(t *testing.T) {
 	m := NewAVLMapIntInt()
 	for i := 0; i < 6; i++ {
 		m.Put(i, i*10)
